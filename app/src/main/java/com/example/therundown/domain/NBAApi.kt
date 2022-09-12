@@ -6,7 +6,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
 
-object NbaApi {
+object NBAApi {
 
     private const val BASE_URL = "https://free-nba.p.rapidapi.com/"
 

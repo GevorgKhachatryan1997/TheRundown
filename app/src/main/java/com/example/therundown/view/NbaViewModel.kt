@@ -3,9 +3,10 @@ package com.example.therundown.view
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.therundown.data.PlayerLoadExeption
-import com.example.therundown.data.Repository
+import com.example.therundown.domain.Repository
 import com.example.therundown.data.ServerExeption
-import com.example.therundown.domain.PlayerDto
+import com.example.therundown.domain.Player
+import com.example.therundown.domain.convertToPlayer
 import com.example.therundown.utils.emit
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -16,7 +17,7 @@ class NbaViewModel : ViewModel() {
     private val _uiEventSharedFlow = MutableSharedFlow<UIEvent>()
     val uiEventSharedFlow = _uiEventSharedFlow.asSharedFlow()
 
-    private val _playerList = MutableStateFlow<List<PlayerDto>>(emptyList())
+    private val _playerList = MutableStateFlow<List<Player>>(emptyList())
     val playerList = _playerList.asStateFlow()
 
     fun loadPlayers() {

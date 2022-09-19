@@ -3,16 +3,18 @@ package com.example.therundown.view
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.therundown.data.PlayerLoadExeption
-import com.example.therundown.domain.Repository
 import com.example.therundown.data.ServerExeption
 import com.example.therundown.domain.Player
-import com.example.therundown.domain.convertToPlayer
+import com.example.therundown.domain.Repository
 import com.example.therundown.utils.emit
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class NbaViewModel : ViewModel() {
+class NbaViewModel(private val repository: Repository) : ViewModel() {
 
     private val _uiEventSharedFlow = MutableSharedFlow<UIEvent>()
     val uiEventSharedFlow = _uiEventSharedFlow.asSharedFlow()
@@ -23,7 +25,7 @@ class NbaViewModel : ViewModel() {
     fun loadPlayers() {
         try {
             viewModelScope.launch(Dispatchers.IO) {
-                _playerList.value = Repository.getPlayers()
+                _playerList.value = repository.getPlayers()
             }
         } catch (e: ServerExeption) {
             _uiEventSharedFlow.emit(ShowServerFailMessage, viewModelScope)

@@ -1,15 +1,13 @@
 package com.example.therundown.data
 
-import com.example.therundown.domain.NBAApi
 import com.example.therundown.domain.PlayerDto
 import java.io.IOException
-import kotlin.jvm.Throws
 
-class RemoteDataSource {
+class RemoteDataSource(private val nbaApi: NBAApi) {
 
     @Throws(ServerExeption::class, PlayerLoadExeption::class)
     fun getPlayers(): List<PlayerDto> {
-        val responsePlayers = NBAApi.getPlayers()
+        val responsePlayers = nbaApi.getPlayers()
 
         try {
             if (responsePlayers.isSuccessful) {

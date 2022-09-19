@@ -1,4 +1,4 @@
-package com.example.therundown.domain
+package com.example.therundown.data
 
 import com.example.therundown.data.Data
 import retrofit2.Call

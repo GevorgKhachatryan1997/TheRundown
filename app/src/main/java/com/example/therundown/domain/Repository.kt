@@ -2,11 +2,9 @@ package com.example.therundown.domain
 
 import com.example.therundown.data.RemoteDataSource
 
-object Repository {
+class Repository(private val remoteDataSource: RemoteDataSource) {
 
-    fun getPlayers() = RemoteDataSource()
+    fun getPlayers() = remoteDataSource
         .getPlayers()
         .map { playerDto -> playerDto.convertToPlayer() }
-
-
 }

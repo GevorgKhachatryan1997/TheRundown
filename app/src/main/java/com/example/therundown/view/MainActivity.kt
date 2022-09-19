@@ -3,23 +3,23 @@ package com.example.therundown.view
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.therundown.R
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
     private var recyclerView: RecyclerView? = null
     private val nbaAdapter = NbaAdapter()
-    private val nbaViewModel: NbaViewModel by lazy { ViewModelProvider(this)[NbaViewModel::class.java] }
+    private val nbaViewModel by viewModel<NbaViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        initRecycleView()
+        showNBAPlayers()
 
         lifecycleScope.launchWhenCreated {
             nbaViewModel.uiEventSharedFlow.collect { event ->
@@ -55,9 +55,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun initRecycleView() {
+    private fun showNBAPlayers() {
         recyclerView = findViewById(R.id.nbaRecycleView)
-        recyclerView?.adapter = nbaAdapter
-        recyclerView?.layoutManager = LinearLayoutManager(this)
+        recyclerView?.apply {
+            adapter = nbaAdapter
+            layoutManager = LinearLayoutManager(this@MainActivity)
+        }
     }
 }

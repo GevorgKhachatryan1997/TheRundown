@@ -50,4 +50,7 @@ dependencies {
 
     // viewModelScope
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
+    // koin
+    implementation "io.insert-koin:koin-core:3.2.1"
+    implementation "io.insert-koin:koin-androidx-workmanager:3.2.1"
 }

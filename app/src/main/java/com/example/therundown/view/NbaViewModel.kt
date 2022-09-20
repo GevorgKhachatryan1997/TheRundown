@@ -6,6 +6,7 @@ import com.example.therundown.data.PlayerLoadExeption
 import com.example.therundown.data.ServerExeption
 import com.example.therundown.domain.Player
 import com.example.therundown.domain.Repository
+import com.example.therundown.domain.convertToPlayer
 import com.example.therundown.utils.emit
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -34,8 +35,17 @@ class NbaViewModel(private val repository: Repository) : ViewModel() {
         }
     }
 
+    fun onPlayerClick(playerId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val playerDto = repository.getPlayer(playerId)
+            val player = playerDto?.convertToPlayer() ?: return@launch
+            _uiEventSharedFlow.emit(ShowPlayer(player), viewModelScope)
+        }
+    }
+
     interface UIEvent
 
     object ShowServerFailMessage : UIEvent
     object ShowPlayerLoadFailMessage : UIEvent
+    class ShowPlayer(val player: Player) : UIEvent
 }

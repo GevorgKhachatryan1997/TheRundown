@@ -12,6 +12,8 @@ import com.example.therundown.domain.Player
 
 class NbaAdapter : ListAdapter<Player, NbaViewHolder>(DIFF_UTIL) {
 
+    var onItemClickListener: OnItemClickListener? = null
+
     companion object {
         private val DIFF_UTIL = object : DiffUtil.ItemCallback<Player>() {
             override fun areItemsTheSame(oldItem: Player, newItem: Player): Boolean {
@@ -28,7 +30,7 @@ class NbaAdapter : ListAdapter<Player, NbaViewHolder>(DIFF_UTIL) {
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.nba_player, viewGroup, false)
 
-        return NbaViewHolder(view)
+        return NbaViewHolder(view, onItemClickListener)
     }
 
     override fun onBindViewHolder(holder: NbaViewHolder, position: Int) {
@@ -36,10 +38,26 @@ class NbaAdapter : ListAdapter<Player, NbaViewHolder>(DIFF_UTIL) {
     }
 }
 
-class NbaViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+class NbaViewHolder(view: View, onItemClickListener: OnItemClickListener?) :
+    RecyclerView.ViewHolder(view) {
+
     private var nbaTextView: TextView = view.findViewById(R.id.nbaTextView)
+    private var player: Player? = null
+
+    init {
+        nbaTextView.setOnClickListener {
+            player?.let {
+                onItemClickListener?.onClick(it)
+            }
+        }
+    }
 
     fun bind(player: Player) {
-        nbaTextView.text = player.lastName
+        this.player = player
+        nbaTextView.text = player.firstName
     }
+}
+
+interface OnItemClickListener {
+    fun onClick(player: Player)
 }

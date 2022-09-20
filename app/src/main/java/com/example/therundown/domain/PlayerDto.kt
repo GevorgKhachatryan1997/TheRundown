@@ -20,5 +20,8 @@ class PlayerDto(
     val lastName: String? = null,
 
     @SerializedName("position")
-    val position: String? = null
+    val position: String? = null,
+
+    @SerializedName("team")
+    val team: TeamDto? = null
 )

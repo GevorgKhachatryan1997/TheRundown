@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">TheRundown</string>
+    <string name="name">name</string>
+    <string name="fullname">fullName</string>
+    <string name="abbreviation">Abbreviation</string>
+    <string name="city">city</string>
+    <string name="conference">conference</string>
+    <string name="division">Division</string>
+    <string name="id">Id</string>
 </resources>

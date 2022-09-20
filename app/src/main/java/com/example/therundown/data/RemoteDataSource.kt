@@ -20,4 +20,13 @@ class RemoteDataSource(private val nbaApi: NBAApi) {
             throw PlayerLoadExeption("Unable to get player list", i)
         }
     }
+
+    fun getPlayer(id: String): PlayerDto? {
+        val player = nbaApi.getPlayer(id)
+        return if (player.isSuccessful) {
+            player.body()!!
+        }else{
+            null
+        }
+    }
 }

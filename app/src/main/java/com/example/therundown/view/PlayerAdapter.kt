@@ -3,6 +3,7 @@ package com.example.therundown.view
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -10,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.therundown.R
 import com.example.therundown.domain.Player
 
-class NbaAdapter : ListAdapter<Player, NbaViewHolder>(DIFF_UTIL) {
+class PlayerAdapter : ListAdapter<Player, NbaViewHolder>(DIFF_UTIL) {
 
     var onItemClickListener: OnItemClickListener? = null
 
@@ -28,7 +29,7 @@ class NbaAdapter : ListAdapter<Player, NbaViewHolder>(DIFF_UTIL) {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): NbaViewHolder {
         val view = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.nba_player, viewGroup, false)
+            .inflate(R.layout.player, viewGroup, false)
 
         return NbaViewHolder(view, onItemClickListener)
     }
@@ -41,11 +42,12 @@ class NbaAdapter : ListAdapter<Player, NbaViewHolder>(DIFF_UTIL) {
 class NbaViewHolder(view: View, onItemClickListener: OnItemClickListener?) :
     RecyclerView.ViewHolder(view) {
 
-    private var nbaTextView: TextView = view.findViewById(R.id.nbaTextView)
+    private val playerNameTextView: TextView = view.findViewById(R.id.playerNameTextView)
+    private val btnTeam: Button = view.findViewById(R.id.btnTeam)
     private var player: Player? = null
 
     init {
-        nbaTextView.setOnClickListener {
+        btnTeam.setOnClickListener {
             player?.let {
                 onItemClickListener?.onClick(it)
             }
@@ -54,7 +56,7 @@ class NbaViewHolder(view: View, onItemClickListener: OnItemClickListener?) :
 
     fun bind(player: Player) {
         this.player = player
-        nbaTextView.text = player.firstName
+        playerNameTextView.text = player.firstName
     }
 }
 

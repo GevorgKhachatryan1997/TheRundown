@@ -53,4 +53,7 @@ dependencies {
     // koin
     implementation "io.insert-koin:koin-core:3.2.1"
     implementation "io.insert-koin:koin-androidx-workmanager:3.2.1"
+
+    // bottom navigation
+    implementation 'com.google.android.material:material:1.6.1'
 }

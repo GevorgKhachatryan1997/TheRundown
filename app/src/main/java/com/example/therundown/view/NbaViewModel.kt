@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.therundown.data.PlayerLoadExeption
 import com.example.therundown.data.ServerExeption
+import com.example.therundown.domain.GameDto
 import com.example.therundown.domain.Player
 import com.example.therundown.domain.Repository
 import com.example.therundown.domain.convertToPlayer
@@ -23,6 +24,9 @@ class NbaViewModel(private val repository: Repository) : ViewModel() {
     private val _playerList = MutableStateFlow<List<Player>>(emptyList())
     val playerList = _playerList.asStateFlow()
 
+    private val _gameList = MutableStateFlow<List<GameDto>>(emptyList())
+    val gameList = _gameList.asStateFlow()
+
     fun loadPlayers() {
         try {
             viewModelScope.launch(Dispatchers.IO) {
@@ -35,17 +39,23 @@ class NbaViewModel(private val repository: Repository) : ViewModel() {
         }
     }
 
+    fun loadGames() {
+        viewModelScope.launch(Dispatchers.IO) {
+            _gameList.value = repository.getGames()
+        }
+    }
+
     fun onPlayerClick(playerId: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val playerDto = repository.getPlayer(playerId)
             val player = playerDto?.convertToPlayer() ?: return@launch
-            _uiEventSharedFlow.emit(ShowPlayer(player), viewModelScope)
+            _uiEventSharedFlow.emit(ShowPlayerInfoDialog(player), viewModelScope)
         }
     }
 
     interface UIEvent
-
     object ShowServerFailMessage : UIEvent
     object ShowPlayerLoadFailMessage : UIEvent
-    class ShowPlayer(val player: Player) : UIEvent
+    object ShowGameInfoDialog: UIEvent
+    class ShowPlayerInfoDialog(val player: Player) : UIEvent
 }

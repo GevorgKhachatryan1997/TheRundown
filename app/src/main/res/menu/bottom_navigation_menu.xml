@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/gameBottom"
+        android:enabled="true"
+        android:icon="@drawable/sports_basketball_24"
+        android:title="@string/game" />
+
+    <item
+        android:id="@+id/playerBottom"
+        android:enabled="true"
+        android:icon="@drawable/basketball_player"
+        android:title="@string/player" />
+</menu>

@@ -18,36 +18,29 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        bottomNavigationView = findViewById(R.id.bottomNavigation)
-        bottomNavigationView?.setOnItemReselectedListener { item ->
+        if (supportFragmentManager.findFragmentById(R.id.fragmentContainer) == null) {
+            showGameFragment()
+        }
 
+        bottomNavigationView = findViewById(R.id.bottomNavigation)
+        bottomNavigationView?.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.gameBottom -> {
-                    val gameFragment = GameFragment()
-                    if (savedInstanceState == null) {
-                        supportFragmentManager.commit {
-                            setReorderingAllowed(true)
-                            replace(R.id.fragmentContainer, gameFragment)
-                        }
-                    }
+                    showGameFragment()
                 }
 
                 R.id.playerBottom -> {
-                    val playerFragment = PlayerFragment()
-                    if (savedInstanceState == null) {
-                        supportFragmentManager.commit {
-                            setReorderingAllowed(true)
-                            replace(R.id.fragmentContainer, playerFragment)
-                        }
-                    }
+                    showPlayerFragment()
                 }
+
+                else -> return@setOnItemSelectedListener false
             }
+            return@setOnItemSelectedListener true
         }
 
         lifecycleScope.launchWhenCreated {
             nbaViewModel.uiEventSharedFlow.collect { event ->
                 when (event) {
-
                     is NbaViewModel.ShowServerFailMessage -> {
                         Toast.makeText(
                             this@MainActivity,
@@ -63,12 +56,26 @@ class MainActivity : AppCompatActivity() {
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-
-                    is NbaViewModel.ShowPlayerInfoDialog -> {
-
-                    }
                 }
             }
+        }
+    }
+
+    private fun showGameFragment() {
+        val gameFragment =
+            supportFragmentManager.findFragmentByTag(GameFragment.TAG) ?: GameFragment()
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            replace(R.id.fragmentContainer, gameFragment, GameFragment.TAG)
+        }
+    }
+
+    private fun showPlayerFragment() {
+        val playerFragment =
+            supportFragmentManager.findFragmentByTag(PlayerFragment.TAG) ?: PlayerFragment()
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            replace(R.id.fragmentContainer, playerFragment, PlayerFragment.TAG)
         }
     }
 }

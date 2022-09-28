@@ -11,12 +11,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.therundown.R
 import com.example.therundown.domain.Player
 
-class PlayerAdapter : ListAdapter<Player, NbaViewHolder>(DIFF_UTIL) {
+class PlayerAdapter : ListAdapter<Player, PlayerViewHolder>(PLAYER_DIFF_UTIL) {
 
-    var onItemClickListener: OnItemClickListener? = null
+    var onPlayerItemClickListener: OnPlayerItemClickListener? = null
 
     companion object {
-        private val DIFF_UTIL = object : DiffUtil.ItemCallback<Player>() {
+        private val PLAYER_DIFF_UTIL = object : DiffUtil.ItemCallback<Player>() {
             override fun areItemsTheSame(oldItem: Player, newItem: Player): Boolean {
                 return oldItem === newItem
             }
@@ -27,19 +27,18 @@ class PlayerAdapter : ListAdapter<Player, NbaViewHolder>(DIFF_UTIL) {
         }
     }
 
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): NbaViewHolder {
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): PlayerViewHolder {
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.player, viewGroup, false)
-
-        return NbaViewHolder(view, onItemClickListener)
+        return PlayerViewHolder(view, onPlayerItemClickListener)
     }
 
-    override fun onBindViewHolder(holder: NbaViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: PlayerViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 }
 
-class NbaViewHolder(view: View, onItemClickListener: OnItemClickListener?) :
+class PlayerViewHolder(view: View, onPlayerItemClickListener: OnPlayerItemClickListener?) :
     RecyclerView.ViewHolder(view) {
 
     private val playerNameTextView: TextView = view.findViewById(R.id.playerNameTextView)
@@ -49,7 +48,7 @@ class NbaViewHolder(view: View, onItemClickListener: OnItemClickListener?) :
     init {
         btnTeam.setOnClickListener {
             player?.let {
-                onItemClickListener?.onClick(it)
+                onPlayerItemClickListener?.onClick(it)
             }
         }
     }
@@ -60,6 +59,6 @@ class NbaViewHolder(view: View, onItemClickListener: OnItemClickListener?) :
     }
 }
 
-interface OnItemClickListener {
+fun interface OnPlayerItemClickListener {
     fun onClick(player: Player)
 }

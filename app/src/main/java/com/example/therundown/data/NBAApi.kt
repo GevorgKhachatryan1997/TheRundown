@@ -1,6 +1,6 @@
 package com.example.therundown.data
 
-import com.example.therundown.domain.GameDto
+import com.example.therundown.domain.Game
 import com.example.therundown.domain.PlayerDto
 import retrofit2.Response
 import java.io.IOException
@@ -22,5 +22,10 @@ class NBAApi(private val nbaService: NbaService) {
     @Throws(IOException::class)
     fun getPlayer(id: String): Response<PlayerDto> {
         return nbaService.getPlayer(id).execute()
+    }
+
+    @Throws(IOException::class)
+    fun getGame(id: String): Response<Game> {
+        return nbaService.getGame(id).execute()
     }
 }

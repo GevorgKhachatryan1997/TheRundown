@@ -20,4 +20,6 @@
     <string name="visitorTeamScore">VisitorTeamScore</string>
     <string name="period">period</string>
     <string name="player">player</string>
+    <string name="teams">TEAMS</string>
+    <string name="info">Info</string>
 </resources>

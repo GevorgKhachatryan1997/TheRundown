@@ -1,10 +1,11 @@
 package com.example.therundown.domain
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
-class GameDto(
+class Game(
     @SerializedName("id")
-    val id: Int? = null,
+    val id: String? = null,
 
     @SerializedName("date")
     val date: String? = null,
@@ -35,4 +36,20 @@ class GameDto(
 
     @SerializedName("visitor_team_score")
     val visitorTeamScore: String? = null
-)
+) : Serializable {
+    override fun equals(other: Any?): Boolean {
+        return other is Game &&
+                other.id == id &&
+                other.date == date &&
+                other.homeTeam == homeTeam &&
+                other.homeTeamScore == homeTeamScore &&
+                other.period == period &&
+                other.postseason == postseason &&
+                other.season == season &&
+                other.status == status &&
+                other.time == time &&
+                other.visitorTeam == visitorTeam &&
+                other.visitorTeamScore == visitorTeamScore
+    }
+}
+

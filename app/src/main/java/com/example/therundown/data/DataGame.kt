@@ -1,5 +1,5 @@
 package com.example.therundown.data
 
-import com.example.therundown.domain.GameDto
+import com.example.therundown.domain.Game
 
-class DataGame(val data: List<GameDto>)
+class DataGame(val data: List<Game>)

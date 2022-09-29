@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 class TeamDto(
 
     @SerializedName("id")
-    val id: Int? = null,
+    val id: String? = null,
 
     @SerializedName("abbreviation")
     val abbreviation: String? = null,

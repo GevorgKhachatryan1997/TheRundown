@@ -1,7 +1,8 @@
 package com.example.therundown.data
 
-import com.example.therundown.domain.Game
+import com.example.therundown.domain.GameDto
 import com.example.therundown.domain.PlayerDto
+import com.example.therundown.domain.TeamDto
 import java.io.IOException
 
 class RemoteDataSource(private val nbaApi: NBAApi) {
@@ -22,13 +23,6 @@ class RemoteDataSource(private val nbaApi: NBAApi) {
         }
     }
 
-    fun getGames(): List<Game> {
-        val responseGameDto = nbaApi.getGames()
-        return if (responseGameDto.isSuccessful) {
-            responseGameDto.body()!!.data
-        } else emptyList()
-    }
-
     fun getPlayer(id: String): PlayerDto? {
         val player = nbaApi.getPlayer(id)
         return if (player.isSuccessful) {
@@ -38,11 +32,34 @@ class RemoteDataSource(private val nbaApi: NBAApi) {
         }
     }
 
-    fun getGame(id: String): Game? {
+    fun getGames(): List<GameDto> {
+        val responseGameDto = nbaApi.getGames()
+        return if (responseGameDto.isSuccessful) {
+            responseGameDto.body()!!.data
+        } else emptyList()
+    }
+
+    fun getGame(id: String): GameDto? {
         val game = nbaApi.getGame(id)
         return if (game.isSuccessful) {
             game.body()!!
         } else {
+            null
+        }
+    }
+
+    fun getTeams(): List<TeamDto> {
+        val responseTeams = nbaApi.getTeams()
+        return if (responseTeams.isSuccessful) {
+            responseTeams.body()!!.data
+        } else emptyList()
+    }
+
+    fun getTeam(id: String): TeamDto?{
+        val team = nbaApi.getTeam(id)
+        return if (team.isSuccessful){
+            team.body()!!
+        }else {
             null
         }
     }

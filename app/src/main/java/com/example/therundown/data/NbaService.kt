@@ -1,7 +1,8 @@
 package com.example.therundown.data
 
-import com.example.therundown.domain.Game
+import com.example.therundown.domain.GameDto
 import com.example.therundown.domain.PlayerDto
+import com.example.therundown.domain.TeamDto
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Headers
@@ -23,5 +24,13 @@ interface NbaService {
 
     @Headers(value = ["X-RapidAPI-Key: d55fee44fcmsh35def730cef21dfp1f3e66jsn78117291062c", "X-RapidAPI-Host: free-nba.p.rapidapi.com"])
     @GET("games/{id}")
-    fun getGame(@Path("id") id: String): Call<Game>
+    fun getGame(@Path("id") id: String): Call<GameDto>
+
+    @Headers(value = ["X-RapidAPI-Key: d55fee44fcmsh35def730cef21dfp1f3e66jsn78117291062c", "X-RapidAPI-Host: free-nba.p.rapidapi.com"])
+    @GET("teams")
+    fun getTeams(): Call<DataTeam>
+
+    @Headers(value = ["X-RapidAPI-Key: d55fee44fcmsh35def730cef21dfp1f3e66jsn78117291062c", "X-RapidAPI-Host: free-nba.p.rapidapi.com"])
+    @GET("teams/{id}")
+    fun getTeam(@Path("id") id: String): Call<TeamDto>
 }

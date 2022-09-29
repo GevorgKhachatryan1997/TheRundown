@@ -9,16 +9,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.therundown.R
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class GameFragment : Fragment(R.layout.game_fragment) {
+class TeamFragment : Fragment(R.layout.team_fragment) {
 
-    companion object {
-        val TAG = GameFragment::class.simpleName
+    companion object{
+        val TAG = TeamFragment::class.simpleName
     }
 
     private val nbaViewModel by viewModel<NbaViewModel>(owner = { requireActivity() })
-    private val gameAdapter = GameAdapter()
-    private val onGameItemClickListener = OnGameItemClickListener { game ->
-        game.id?.let { nbaViewModel.onGameClick(it) }
+    private val teamAdapter = TeamAdapter()
+    private val onTeamItemClickListener = OnTeamItemClickListener { team ->
+        team.id?.let { nbaViewModel.onTeamClick(team.id) }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -26,34 +26,34 @@ class GameFragment : Fragment(R.layout.game_fragment) {
 
         showGames()
         lifecycleScope.launchWhenCreated {
-            nbaViewModel.gameList.collect { games ->
-                gameAdapter.submitList(games)
+            nbaViewModel.teamList.collect { teams ->
+                teamAdapter.submitList(teams)
             }
+        }
+
+        if (nbaViewModel.teamList.value.isEmpty()) {
+            nbaViewModel.loadTeams()
         }
 
         lifecycleScope.launchWhenCreated {
             nbaViewModel.uiEventSharedFlow.collect { event ->
                 when (event) {
-                    is NbaViewModel.ShowGameInfoDialog -> {
-                        GameDialog.newInstance(event.game).show(
+                    is NbaViewModel.ShowTeamInfoDialog -> {
+                        TeamDialog.newInstance(event.team).show(
                             requireActivity().supportFragmentManager,
-                            GameDialog.GAME_DIALOG_TAG
+                            TeamDialog.TEAM_DIALOG_TAG
                         )
                     }
                 }
             }
         }
-
-        if (nbaViewModel.gameList.value.isEmpty()) {
-            nbaViewModel.loadGames()
-        }
     }
 
     private fun showGames() {
-        val recyclerView = view?.findViewById<RecyclerView>(R.id.gameRecycleView)
+        val recyclerView = view?.findViewById<RecyclerView>(R.id.teamRecycleView)
         recyclerView?.apply {
-            adapter = gameAdapter
-            gameAdapter.onGameItemClickListener = onGameItemClickListener
+            adapter = teamAdapter
+            teamAdapter.onTeamItemClickListener = onTeamItemClickListener
             layoutManager = LinearLayoutManager(view?.context)
         }
     }

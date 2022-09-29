@@ -33,6 +33,10 @@ class MainActivity : AppCompatActivity() {
                     showPlayerFragment()
                 }
 
+                R.id.teamBottom -> {
+                    showTeamFragment()
+                }
+
                 else -> return@setOnItemSelectedListener false
             }
             return@setOnItemSelectedListener true
@@ -76,6 +80,15 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
             replace(R.id.fragmentContainer, playerFragment, PlayerFragment.TAG)
+        }
+    }
+
+    private fun showTeamFragment() {
+        val teamFragment =
+            supportFragmentManager.findFragmentByTag(TeamFragment.TAG) ?: TeamFragment()
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            replace(R.id.fragmentContainer, teamFragment, TeamFragment.TAG)
         }
     }
 }

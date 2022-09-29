@@ -8,9 +8,13 @@ class Repository(private val remoteDataSource: RemoteDataSource) {
         .getPlayers()
         .map { playerDto -> playerDto.convertToPlayer() }
 
-    fun getGames() = remoteDataSource.getGames().map { gameDto -> gameDto.convertToGame()  }
-
     fun getPlayer(id: String) = remoteDataSource.getPlayer(id)
 
+    fun getGames() = remoteDataSource.getGames().map { gameDto -> gameDto.convertToGame()  }
+
     fun getGame(id: String) = remoteDataSource.getGame(id)
+
+    fun getTeams() = remoteDataSource.getTeams().map {teamDto -> teamDto.convertToTeam()}
+
+    fun getTeam(id: String) = remoteDataSource.getTeam(id)?.convertToTeam()
 }

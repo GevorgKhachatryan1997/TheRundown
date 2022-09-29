@@ -7,6 +7,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import com.example.therundown.R
 import com.example.therundown.domain.Game
+import com.example.therundown.domain.GameDto
 
 class GameDialog : DialogFragment(R.layout.game_dialog) {
 
@@ -18,7 +19,7 @@ class GameDialog : DialogFragment(R.layout.game_dialog) {
         }
 
         private const val ARG_GAME = "arg game"
-        val GAME_DIALOG_TAG = PlayerDialog::class.simpleName
+        val GAME_DIALOG_TAG = GameDialog::class.simpleName
     }
 
     private var tvGameInfo: TextView? = null

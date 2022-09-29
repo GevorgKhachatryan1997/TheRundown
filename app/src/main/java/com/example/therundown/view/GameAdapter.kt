@@ -39,23 +39,23 @@ class GameAdapter : ListAdapter<Game, GameAdapter.GameViewHolder>(GAME_DIFF_UTIL
     class GameViewHolder(itemView: View, onGameItemClickListener: OnGameItemClickListener?) :
         RecyclerView.ViewHolder(itemView) {
         private var tvGameId: TextView = itemView.findViewById(R.id.tvGameId)
-        private var gameDto: Game? = null
+        private var game: Game? = null
 
         init {
             tvGameId.setOnClickListener {
-                gameDto?.let {
+                game?.let {
                     onGameItemClickListener?.onClick(it)
                 }
             }
         }
 
-        fun bind(gameDto: Game) {
-            this.gameDto = gameDto
-            tvGameId.text = "${gameDto.homeTeam?.fullName}"
+        fun bind(game: Game) {
+            this.game = game
+            tvGameId.text = "${game.id}"
         }
     }
 }
 
 fun interface OnGameItemClickListener {
-    fun onClick(gameDto: Game)
+    fun onClick(game: Game)
 }

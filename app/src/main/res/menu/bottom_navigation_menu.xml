@@ -12,4 +12,9 @@
         android:enabled="true"
         android:icon="@drawable/basketball_player"
         android:title="@string/player" />
+    <item
+        android:id="@+id/teamBottom"
+        android:enabled="true"
+        android:icon="@drawable/basketball_team"
+        android:title="@string/team"/>
 </menu>

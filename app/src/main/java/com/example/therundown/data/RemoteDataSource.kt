@@ -4,71 +4,115 @@ import com.example.therundown.data.dtos.GameDto
 import com.example.therundown.data.dtos.PlayerDto
 import com.example.therundown.data.dtos.StatDto
 import com.example.therundown.data.dtos.TeamDto
+import com.example.therundown.data.exeptions.*
+import retrofit2.Response
 import java.io.IOException
 
 class RemoteDataSource(private val nbaApi: NBAApi) {
 
     @Throws(ServerExeption::class, PlayerLoadExeption::class)
     fun getPlayers(): List<PlayerDto> {
-        val responsePlayers = nbaApi.getPlayers()
-
         try {
-            if (responsePlayers.isSuccessful) {
-                return responsePlayers.body()!!.data
-            } else {
-                val message = " ${responsePlayers.code()} ${responsePlayers.errorBody()}"
-                throw ServerExeption(message)
-            }
+            val responsePlayers = nbaApi.getPlayers()
+            val players = ensureResponse(
+                responsePlayers,
+                " ${responsePlayers.code()} ${responsePlayers.errorBody()}"
+            )
+            return players?.data ?: emptyList()
         } catch (i: IOException) {
             throw PlayerLoadExeption("Unable to get player list", i)
         }
     }
 
-    fun getPlayer(id: String): PlayerDto? {
-        val player = nbaApi.getPlayer(id)
-        return if (player.isSuccessful) {
-            player.body()!!
-        } else {
-            null
+    @Throws(ServerExeption::class, PlayerLoadExeption::class)
+    fun getPlayer(id: String): PlayerDto {
+        try {
+            val playerResponse = nbaApi.getPlayer(id)
+            val player = ensureResponse(
+                playerResponse,
+                " ${playerResponse.code()} ${playerResponse.errorBody()}"
+            )
+            return player!!
+        } catch (i: IOException) {
+            throw PlayerLoadExeption("Unable to get player")
         }
     }
 
+    @Throws(ServerExeption::class, GameLoadExeption::class)
     fun getGames(): List<GameDto> {
-        val responseGameDto = nbaApi.getGames()
-        return if (responseGameDto.isSuccessful) {
-            responseGameDto.body()!!.data
-        } else emptyList()
-    }
-
-    fun getGame(id: String): GameDto? {
-        val game = nbaApi.getGame(id)
-        return if (game.isSuccessful) {
-            game.body()!!
-        } else {
-            null
+        try {
+            val responseGames = nbaApi.getGames()
+            val games = ensureResponse(
+                responseGames,
+                " ${responseGames.code()} ${responseGames.errorBody()}"
+            )
+            return games?.data ?: emptyList()
+        } catch (i: IOException) {
+            throw GameLoadExeption("Unable to get game list")
         }
     }
 
+    @Throws(ServerExeption::class, GameLoadExeption::class)
+    fun getGame(id: String): GameDto {
+        try {
+            val gameResponse = nbaApi.getGame(id)
+            val game = ensureResponse(
+                gameResponse,
+                " ${gameResponse.code()} ${gameResponse.errorBody()}"
+            )
+            return game!!
+        } catch (i: IOException) {
+            throw GameLoadExeption("Unable to get game")
+        }
+    }
+
+    @Throws(ServerExeption::class, TeamLoadExeption::class)
     fun getTeams(): List<TeamDto> {
-        val responseTeams = nbaApi.getTeams()
-        return if (responseTeams.isSuccessful) {
-            responseTeams.body()!!.data
-        } else emptyList()
-    }
-
-    fun getTeam(id: String): TeamDto? {
-        val team = nbaApi.getTeam(id)
-        return if (team.isSuccessful) {
-            team.body()!!
-        } else {
-            null
+        try {
+            val responseTeams = nbaApi.getTeams()
+            val stats = ensureResponse(
+                responseTeams,
+                " ${responseTeams.code()} ${responseTeams.errorBody()}"
+            )
+            return stats?.data ?: emptyList()
+        } catch (i: IOException) {
+            throw TeamLoadExeption("Unable to get team list")
         }
     }
 
+    @Throws(ServerExeption::class, TeamLoadExeption::class)
+    fun getTeam(id: String): TeamDto {
+        try {
+            val teamResponse = nbaApi.getTeam(id)
+            val team = ensureResponse(
+                teamResponse,
+                " ${teamResponse.code()} ${teamResponse.errorBody()}"
+            )
+            return team!!
+        } catch (i: IOException) {
+            throw TeamLoadExeption("Unable to get team")
+        }
+    }
+
+    @Throws(ServerExeption::class, TeamLoadExeption::class)
     fun getStats(): List<StatDto> {
-        val responseStats = nbaApi.getStats()
-        return if (responseStats.isSuccessful) {
-            responseStats.body()!!.data
-        } else emptyList()
+        try {
+            val responseStats = nbaApi.getStats()
+            val stats = ensureResponse(
+                responseStats,
+                " ${responseStats.code()} ${responseStats.errorBody()}"
+            )
+            return stats?.data ?: emptyList()
+        } catch (i: IOException) {
+            throw  StatLoadExeption("Unable to get stat list")
+        }
+    }
+
+    private fun <T> ensureResponse(response: Response<T>, errorMessage: String?): T? {
+        if (response.isSuccessful) {
+            return response.body()
+        } else {
+            throw ServerExeption(message = errorMessage)
+        }
     }
 }

@@ -1,11 +1,15 @@
 package com.example.therundown.view
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import androidx.lifecycle.lifecycleScope
 import com.example.therundown.R
+import com.example.therundown.utils.showShortToast
+import com.example.therundown.view.fragments.GameFragment
+import com.example.therundown.view.fragments.PlayerFragment
+import com.example.therundown.view.fragments.StatFragment
+import com.example.therundown.view.fragments.TeamFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -19,26 +23,26 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         if (supportFragmentManager.findFragmentById(R.id.fragmentContainer) == null) {
-            showGameFragment()
+            showFragment(GameFragment.TAG)
         }
 
         bottomNavigationView = findViewById(R.id.bottomNavigation)
         bottomNavigationView?.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.gameBottom -> {
-                    showGameFragment()
+                    showFragment(GameFragment.TAG)
                 }
 
                 R.id.playerBottom -> {
-                    showPlayerFragment()
+                    showFragment(PlayerFragment.TAG)
                 }
 
                 R.id.teamBottom -> {
-                    showTeamFragment()
+                    showFragment(TeamFragment.TAG)
                 }
 
                 R.id.statBottom -> {
-                    showStatFragment()
+                    showFragment(StatFragment.TAG)
                 }
 
                 else -> return@setOnItemSelectedListener false
@@ -50,58 +54,64 @@ class MainActivity : AppCompatActivity() {
             nbaViewModel.uiEventSharedFlow.collect { event ->
                 when (event) {
                     is NbaViewModel.ShowServerFailMessage -> {
-                        Toast.makeText(
-                            this@MainActivity,
-                            "cant get players list",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        showShortToast("Cant get data")
                     }
 
                     is NbaViewModel.ShowPlayerLoadFailMessage -> {
-                        Toast.makeText(
-                            this@MainActivity,
-                            "cant get players list",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        showShortToast("Cant get players list")
+                    }
+
+                    is NbaViewModel.ShowGameLoadFailMessage -> {
+                        showShortToast("Cant get games list")
+                    }
+
+                    is NbaViewModel.ShowTeamLoadFailMessage -> {
+                        showShortToast("Cant get teams list")
+                    }
+
+                    is NbaViewModel.ShowStatLoadFailMessage -> {
+                        showShortToast("Cant get stats list")
                     }
                 }
             }
         }
     }
 
-    private fun showGameFragment() {
-        val gameFragment =
-            supportFragmentManager.findFragmentByTag(GameFragment.TAG) ?: GameFragment()
-        supportFragmentManager.commit {
-            setReorderingAllowed(true)
-            replace(R.id.fragmentContainer, gameFragment, GameFragment.TAG)
-        }
-    }
+    private fun showFragment(tag: String) {
+        when (tag) {
 
-    private fun showPlayerFragment() {
-        val playerFragment =
-            supportFragmentManager.findFragmentByTag(PlayerFragment.TAG) ?: PlayerFragment()
-        supportFragmentManager.commit {
-            setReorderingAllowed(true)
-            replace(R.id.fragmentContainer, playerFragment, PlayerFragment.TAG)
-        }
-    }
+            GameFragment.TAG -> {
+                val gameFragment = supportFragmentManager.findFragmentByTag(tag) ?: GameFragment()
+                supportFragmentManager.commit {
+                    setReorderingAllowed(true)
+                    replace(R.id.fragmentContainer, gameFragment, tag)
+                }
+            }
 
-    private fun showTeamFragment() {
-        val teamFragment =
-            supportFragmentManager.findFragmentByTag(TeamFragment.TAG) ?: TeamFragment()
-        supportFragmentManager.commit {
-            setReorderingAllowed(true)
-            replace(R.id.fragmentContainer, teamFragment, TeamFragment.TAG)
-        }
-    }
+            PlayerFragment.TAG -> {
+                val playerFragment =
+                    supportFragmentManager.findFragmentByTag(tag) ?: PlayerFragment()
+                supportFragmentManager.commit {
+                    setReorderingAllowed(true)
+                    replace(R.id.fragmentContainer, playerFragment, tag)
+                }
+            }
 
-    private fun showStatFragment() {
-        val statFragment =
-            supportFragmentManager.findFragmentByTag(StatFragment.TAG) ?: StatFragment()
-        supportFragmentManager.commit {
-            setReorderingAllowed(true)
-            replace(R.id.fragmentContainer, statFragment, StatFragment.TAG)
+            TeamFragment.TAG -> {
+                val teamFragment = supportFragmentManager.findFragmentByTag(tag) ?: TeamFragment()
+                supportFragmentManager.commit {
+                    setReorderingAllowed(true)
+                    replace(R.id.fragmentContainer, teamFragment, tag)
+                }
+            }
+
+            StatFragment.TAG -> {
+                val statFragment = supportFragmentManager.findFragmentByTag(tag) ?: StatFragment()
+                supportFragmentManager.commit {
+                    setReorderingAllowed(true)
+                    replace(R.id.fragmentContainer, statFragment, tag)
+                }
+            }
         }
     }
 }

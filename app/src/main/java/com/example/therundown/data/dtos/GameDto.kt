@@ -1,7 +1,7 @@
 package com.example.therundown.data.dtos
 
-import com.example.therundown.domain.HomeTeam
-import com.example.therundown.domain.VisitorTeam
+import com.example.therundown.domain.models.HomeTeam
+import com.example.therundown.domain.models.VisitorTeam
 import com.google.gson.annotations.SerializedName
 
 class GameDto(
@@ -11,10 +11,10 @@ class GameDto(
     @SerializedName("date")
     val date: String? = null,
 
-    @SerializedName("homeTeam")
+    @SerializedName("home_team")
     val homeTeam: HomeTeam? = null,
 
-    @SerializedName("homeTeamScore")
+    @SerializedName("home_team_score")
     val homeTeamScore: String? = null,
 
     @SerializedName("period")
@@ -32,10 +32,9 @@ class GameDto(
     @SerializedName("time")
     val time: String? = null,
 
-    @SerializedName("visitorTeam")
+    @SerializedName("visitor_team")
     val visitorTeam: VisitorTeam? = null,
 
-    @SerializedName("visitorTeamScore")
+    @SerializedName("visitor_team_score")
     val visitorTeamScore: String? = null
 )
-

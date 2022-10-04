@@ -1,5 +1,6 @@
 package com.example.therundown.data.dtos
 
+import com.example.therundown.domain.models.Team
 import com.google.gson.annotations.SerializedName
 
 class PlayerDto(
@@ -23,5 +24,5 @@ class PlayerDto(
     val position: String? = null,
 
     @SerializedName("team")
-    val team: TeamDto? = null
+    val team: Team? = null
 )

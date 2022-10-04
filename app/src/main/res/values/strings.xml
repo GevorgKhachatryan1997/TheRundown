@@ -24,4 +24,5 @@
     <string name="team_info">Team Info</string>
     <string name="game_id">GAMES ID</string>
     <string name="stat">Stat</string>
+    <string name="game_dates">Game Dates</string>
 </resources>

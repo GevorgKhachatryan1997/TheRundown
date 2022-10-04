@@ -4,13 +4,13 @@
     <item
         android:id="@+id/gameBottom"
         android:enabled="true"
-        android:icon="@drawable/sports_basketball_24"
+        android:icon="@drawable/ic_gioppino_basketball_rim"
         android:title="@string/game" />
 
     <item
         android:id="@+id/playerBottom"
         android:enabled="true"
-        android:icon="@drawable/basketball_player"
+        android:icon="@drawable/ic_slamdunk"
         android:title="@string/player" />
     <item
         android:id="@+id/teamBottom"

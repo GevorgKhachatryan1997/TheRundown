@@ -1,7 +1,8 @@
 package com.example.therundown.data.dtos
 
-import com.example.therundown.domain.Game
-import com.example.therundown.domain.Player
+import com.example.therundown.domain.models.Game
+import com.example.therundown.domain.models.Player
+import com.example.therundown.domain.models.Team
 import com.google.gson.annotations.SerializedName
 
 class StatDto(
@@ -18,7 +19,7 @@ class StatDto(
     val dreb: String? = null,
 
     @SerializedName("fg3_pct")
-    val fg3_pct: String? = null,
+    val fg3Pct: String? = null,
 
     @SerializedName("fg3a")
     val fg3a: String? = null,
@@ -27,13 +28,13 @@ class StatDto(
     val fg3m: String? = null,
 
     @SerializedName("fg_pct")
-    val fg_pct: String? = null,
+    val fgPct: String? = null,
 
     @SerializedName("fgm")
     val fgm: String? = null,
 
     @SerializedName("ft_pct")
-    val ft_pct: String? = null,
+    val ftPct: String? = null,
 
     @SerializedName("fta")
     val fta: String? = null,
@@ -63,9 +64,8 @@ class StatDto(
     val stl: String? = null,
 
     @SerializedName("team")
-    val team: TeamDto? = null,
+    val team: Team? = null,
 
     @SerializedName("turnover")
     val turnover: String? = null
-) {
-}
+)

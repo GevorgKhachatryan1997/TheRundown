@@ -1,8 +1,9 @@
 package com.example.therundown.data
 
-import com.example.therundown.domain.GameDto
-import com.example.therundown.domain.PlayerDto
-import com.example.therundown.domain.TeamDto
+import com.example.therundown.data.dtos.GameDto
+import com.example.therundown.data.dtos.PlayerDto
+import com.example.therundown.data.dtos.StatDto
+import com.example.therundown.data.dtos.TeamDto
 import java.io.IOException
 
 class RemoteDataSource(private val nbaApi: NBAApi) {
@@ -55,12 +56,19 @@ class RemoteDataSource(private val nbaApi: NBAApi) {
         } else emptyList()
     }
 
-    fun getTeam(id: String): TeamDto?{
+    fun getTeam(id: String): TeamDto? {
         val team = nbaApi.getTeam(id)
-        return if (team.isSuccessful){
+        return if (team.isSuccessful) {
             team.body()!!
-        }else {
+        } else {
             null
         }
+    }
+
+    fun getStats(): List<StatDto> {
+        val responseStats = nbaApi.getStats()
+        return if (responseStats.isSuccessful) {
+            responseStats.body()!!.data
+        } else emptyList()
     }
 }

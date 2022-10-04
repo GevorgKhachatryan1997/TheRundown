@@ -1,18 +1,14 @@
 package com.example.therundown.domain
 
+import com.example.therundown.data.dtos.GameDto
+
 fun GameDto.convertToGame() =
-    Game(
-        id ?: "",
+    Game(id ?: "",
         date ?: "",
-        homeTeam ?: HomeTeam(
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            ""
-        ),
+        homeTeam ?: HomeTeam("", "", "", "", "", "", ""),
         homeTeamScore ?: "",
-        period ?: ""
+        period ?: "",
+        postseason ?: false,
+        season ?: "",
+        status ?: ""
     )

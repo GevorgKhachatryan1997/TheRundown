@@ -1,5 +1,6 @@
 package com.example.therundown.domain
 
+import com.example.therundown.data.dtos.TeamDto
 import java.io.Serializable
 
 class Player(

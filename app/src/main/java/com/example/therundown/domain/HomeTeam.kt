@@ -1,26 +1,15 @@
 package com.example.therundown.domain
 
-import com.google.gson.annotations.SerializedName
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
-class HomeTeam(
-    @SerializedName("id")
-    val id: String? = null,
-
-    @SerializedName("name")
-    val name: String? = null,
-
-    @SerializedName("full_name")
-    val fullName: String? = null,
-
-    @SerializedName("city")
-    val city: String? = null,
-
-    @SerializedName("division")
-    val division: String? = null,
-
-    @SerializedName("conference")
-    val conference: String? = null,
-
-    @SerializedName("abbreviation")
-    val abbreviation: String? = null
-)
+@Parcelize
+data class HomeTeam(
+    val id: String,
+    val name: String,
+    val fullName: String,
+    val city: String,
+    val division: String,
+    val conference: String,
+    val abbreviation: String
+): Parcelable

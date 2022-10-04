@@ -1,5 +1,7 @@
-package com.example.therundown.domain
+package com.example.therundown.data.dtos
 
+import com.example.therundown.domain.HomeTeam
+import com.example.therundown.domain.VisitorTeam
 import com.google.gson.annotations.SerializedName
 
 class GameDto(

@@ -1,4 +1,4 @@
-package com.example.therundown.domain
+package com.example.therundown.data.dtos
 
 import com.google.gson.annotations.SerializedName
 

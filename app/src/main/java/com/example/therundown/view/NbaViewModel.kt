@@ -27,6 +27,9 @@ class NbaViewModel(private val repository: Repository) : ViewModel() {
     private val _teamList = MutableStateFlow<List<Team>>(emptyList())
     val teamList = _teamList.asStateFlow()
 
+    private val _statList = MutableStateFlow<List<Stat>>(emptyList())
+    val statList = _statList.asStateFlow()
+
     fun loadPlayers() {
         try {
             viewModelScope.launch(Dispatchers.IO) {
@@ -51,27 +54,37 @@ class NbaViewModel(private val repository: Repository) : ViewModel() {
         }
     }
 
+    fun loadStats() {
+        viewModelScope.launch(Dispatchers.IO) {
+            _statList.value = repository.getStats()
+        }
+    }
+
     fun onPlayerClick(playerId: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val playerDto = repository.getPlayer(playerId)
-            val player = playerDto?.convertToPlayer() ?: return@launch
+            val player = repository.getPlayer(playerId) ?: return@launch
             _uiEventSharedFlow.emit(ShowPlayerInfoDialog(player), viewModelScope)
         }
     }
 
     fun onGameClick(gameId: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val gameDto = repository.getGame(gameId) ?: return@launch
-            val game = gameDto.convertToGame()
+            val game = repository.getGame(gameId) ?: return@launch
             _uiEventSharedFlow.emit(ShowGameInfoDialog(game), viewModelScope)
         }
     }
 
-    fun onTeamClick(teamId: String){
+    fun onTeamClick(teamId: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val team = repository.getTeam(teamId)?: return@launch
-            _uiEventSharedFlow.emit(ShowTeamInfoDialog(team),viewModelScope)
+            val team = repository.getTeam(teamId) ?: return@launch
+            _uiEventSharedFlow.emit(ShowTeamInfoDialog(team), viewModelScope)
         }
+    }
+
+    fun onStatClick(statId: String) {
+        statList.value
+            .find { stat -> stat.id == statId }
+            ?.let { _uiEventSharedFlow.emit(ShowStatInfoDialog(it), viewModelScope) }
     }
 
     interface UIEvent
@@ -79,5 +92,6 @@ class NbaViewModel(private val repository: Repository) : ViewModel() {
     object ShowPlayerLoadFailMessage : UIEvent
     class ShowGameInfoDialog(val game: Game) : UIEvent
     class ShowPlayerInfoDialog(val player: Player) : UIEvent
-    class ShowTeamInfoDialog(val team: Team): UIEvent
+    class ShowTeamInfoDialog(val team: Team) : UIEvent
+    class ShowStatInfoDialog(val stat: Stat) : UIEvent
 }

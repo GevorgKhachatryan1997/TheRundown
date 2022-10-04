@@ -1,8 +1,9 @@
 package com.example.therundown.data
 
-import com.example.therundown.domain.GameDto
-import com.example.therundown.domain.PlayerDto
-import com.example.therundown.domain.TeamDto
+import com.example.therundown.data.dtos.GameDto
+import com.example.therundown.data.dtos.PlayerDto
+import com.example.therundown.data.dtos.StatDto
+import com.example.therundown.data.dtos.TeamDto
 import retrofit2.Response
 import java.io.IOException
 
@@ -31,12 +32,17 @@ class NBAApi(private val nbaService: NbaService) {
     }
 
     @Throws(IOException::class)
-    fun getTeams(): Response<DataTeam>{
+    fun getTeams(): Response<DataTeam> {
         return nbaService.getTeams().execute()
     }
 
     @Throws(IOException::class)
-    fun getTeam(id: String): Response<TeamDto>{
+    fun getTeam(id: String): Response<TeamDto> {
         return nbaService.getTeam(id).execute()
+    }
+
+    @Throws(IOException::class)
+    fun getStats(): Response<DataStat> {
+        return nbaService.getStats().execute()
     }
 }

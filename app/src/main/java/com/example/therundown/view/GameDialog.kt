@@ -7,7 +7,6 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import com.example.therundown.R
 import com.example.therundown.domain.Game
-import com.example.therundown.domain.GameDto
 
 class GameDialog : DialogFragment(R.layout.game_dialog) {
 

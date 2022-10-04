@@ -1,4 +1,4 @@
-package com.example.therundown.view
+package com.example.therundown.view.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.therundown.R
-import com.example.therundown.domain.Stat
+import com.example.therundown.data.models.Stat
 
 class StatAdapter : ListAdapter<Stat, StatViewHolder>(STAT_DIFF_UTIL) {
 
@@ -53,7 +53,7 @@ class StatViewHolder(view: View, onStatItemClickListener: OnStatItemClickListene
 
     fun bind(stat: Stat) {
         this.stat = stat
-        tvStatId.text = stat.id
+        tvStatId.text = stat.turnover
     }
 }
 

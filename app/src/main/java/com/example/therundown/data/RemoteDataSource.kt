@@ -9,7 +9,7 @@ import java.io.IOException
 class RemoteDataSource(private val nbaApi: NBAApi) {
 
     @Throws(ServerExeption::class, PlayerLoadExeption::class)
-    fun getPlayers(): List<PlayerDto> {
+    fun getPlayers(): List<PlayerDto?> {
         val responsePlayers = nbaApi.getPlayers()
 
         try {
@@ -33,7 +33,7 @@ class RemoteDataSource(private val nbaApi: NBAApi) {
         }
     }
 
-    fun getGames(): List<GameDto> {
+    fun getGames(): List<GameDto?> {
         val responseGameDto = nbaApi.getGames()
         return if (responseGameDto.isSuccessful) {
             responseGameDto.body()!!.data
@@ -49,7 +49,7 @@ class RemoteDataSource(private val nbaApi: NBAApi) {
         }
     }
 
-    fun getTeams(): List<TeamDto> {
+    fun getTeams(): List<TeamDto?> {
         val responseTeams = nbaApi.getTeams()
         return if (responseTeams.isSuccessful) {
             responseTeams.body()!!.data
@@ -65,7 +65,7 @@ class RemoteDataSource(private val nbaApi: NBAApi) {
         }
     }
 
-    fun getStats(): List<StatDto> {
+    fun getStats(): List<StatDto?> {
         val responseStats = nbaApi.getStats()
         return if (responseStats.isSuccessful) {
             responseStats.body()!!.data

@@ -1,4 +1,4 @@
-package com.example.therundown.view
+package com.example.therundown.view.dialogs
 
 import android.os.Bundle
 import android.view.View
@@ -6,15 +6,13 @@ import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import com.example.therundown.R
-import com.example.therundown.domain.Game
+import com.example.therundown.data.models.Game
 
 class GameDialog : DialogFragment(R.layout.game_dialog) {
 
     companion object {
-        fun newInstance(game: Game): GameDialog {
-            val gameDialog = GameDialog()
-            gameDialog.arguments = bundleOf(ARG_GAME to game)
-            return gameDialog
+        fun newInstance(game: Game) = GameDialog().apply {
+            arguments = bundleOf(ARG_GAME to game)
         }
 
         private const val ARG_GAME = "arg game"
@@ -30,7 +28,7 @@ class GameDialog : DialogFragment(R.layout.game_dialog) {
         tvGameInfo = view.findViewById(R.id.tvGameInfo)
         tvGameInfo?.text = """
             id: ${game.id}
-            team name: ${game.homeTeam?.fullName}
+            team name: ${game.homeTeam?.name}
             team score: ${game.homeTeamScore}
             date: ${game.date}
             period: ${game.period}

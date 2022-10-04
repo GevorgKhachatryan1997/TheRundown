@@ -1,8 +1,8 @@
-package com.example.therundown.domain
+package com.example.therundown.data.dtos
 
 import com.google.gson.annotations.SerializedName
 
-class VisitorTeam(
+class VisitorTeamDto(
     @SerializedName("id")
     val id: Int? = null,
 

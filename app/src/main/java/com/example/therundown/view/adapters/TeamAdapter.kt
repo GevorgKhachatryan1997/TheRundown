@@ -1,4 +1,4 @@
-package com.example.therundown.view
+package com.example.therundown.view.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.therundown.R
-import com.example.therundown.domain.Team
+import com.example.therundown.data.models.Team
 
 class TeamAdapter : ListAdapter<Team, TeamAdapter.TeamViewHolder>(TEAM_DIFF_UTIL) {
 

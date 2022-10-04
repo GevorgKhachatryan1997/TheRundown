@@ -1,4 +1,4 @@
-package com.example.therundown.view
+package com.example.therundown.view.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.therundown.R
-import com.example.therundown.domain.Game
+import com.example.therundown.data.models.Game
 
 class GameAdapter : ListAdapter<Game, GameAdapter.GameViewHolder>(GAME_DIFF_UTIL) {
 
@@ -38,11 +38,11 @@ class GameAdapter : ListAdapter<Game, GameAdapter.GameViewHolder>(GAME_DIFF_UTIL
 
     class GameViewHolder(itemView: View, onGameItemClickListener: OnGameItemClickListener?) :
         RecyclerView.ViewHolder(itemView) {
-        private var tvGameId: TextView = itemView.findViewById(R.id.tvGameId)
+        private var tvGameName: TextView = itemView.findViewById(R.id.tvGameId)
         private var game: Game? = null
 
         init {
-            tvGameId.setOnClickListener {
+            tvGameName.setOnClickListener {
                 game?.let {
                     onGameItemClickListener?.onClick(it)
                 }
@@ -51,7 +51,7 @@ class GameAdapter : ListAdapter<Game, GameAdapter.GameViewHolder>(GAME_DIFF_UTIL
 
         fun bind(game: Game) {
             this.game = game
-            tvGameId.text = "${game.id}"
+            tvGameName.text = "${game.date}"
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.example.therundown.view
+package com.example.therundown.view.dialogs
 
 import android.os.Bundle
 import android.view.View
@@ -6,15 +6,13 @@ import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import com.example.therundown.R
-import com.example.therundown.domain.Team
+import com.example.therundown.data.models.Team
 
 class TeamDialog : DialogFragment(R.layout.team_dialog) {
 
     companion object {
-        fun newInstance(team: Team): TeamDialog {
-            val teamDialog = TeamDialog()
-            teamDialog.arguments = bundleOf(ARG_TEAM to team)
-            return teamDialog
+        fun newInstance(team: Team) = TeamDialog().apply {
+            arguments = bundleOf(ARG_TEAM to team)
         }
 
         private const val ARG_TEAM = "arg team"

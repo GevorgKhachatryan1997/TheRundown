@@ -1,4 +1,4 @@
-package com.example.therundown.view
+package com.example.therundown.view.dialogs
 
 import android.os.Bundle
 import android.view.View
@@ -6,19 +6,17 @@ import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import com.example.therundown.R
-import com.example.therundown.domain.Stat
+import com.example.therundown.data.models.Stat
 
 class StatDialog : DialogFragment(R.layout.stat_dialog) {
 
     companion object {
-        fun newInstance(stat: Stat): StatDialog {
-            val statDialog = StatDialog()
-            statDialog.arguments = bundleOf(ARG_STAT to stat)
-            return statDialog
+        fun newInstance(stat: Stat) = StatDialog().apply {
+            arguments = bundleOf(ARG_STAT to stat)
         }
 
         private const val ARG_STAT = "arg stat"
-        val STAT_DIALOG_TAG = StatDialog::class.simpleName
+        val STAT_DIALOG_TAG = StatDialog::class.simpleName // TODO change  name just TAG
     }
 
     private var tvStatInfo: TextView? = null

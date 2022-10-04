@@ -1,4 +1,4 @@
-package com.example.therundown.view
+package com.example.therundown.view.fragments
 
 import android.os.Bundle
 import android.view.View
@@ -7,6 +7,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.therundown.R
+import com.example.therundown.view.adapters.GameAdapter
+import com.example.therundown.view.NbaViewModel
+import com.example.therundown.view.adapters.OnGameItemClickListener
+import com.example.therundown.view.dialogs.GameDialog
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class GameFragment : Fragment(R.layout.game_fragment) {

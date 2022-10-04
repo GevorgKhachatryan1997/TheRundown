@@ -1,4 +1,4 @@
-package com.example.therundown.view
+package com.example.therundown.view.fragments
 
 import android.os.Bundle
 import android.view.View
@@ -7,6 +7,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.therundown.R
+import com.example.therundown.view.NbaViewModel
+import com.example.therundown.view.adapters.OnStatItemClickListener
+import com.example.therundown.view.adapters.StatAdapter
+import com.example.therundown.view.dialogs.StatDialog
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class StatFragment : Fragment(R.layout.stat_fragment) {
@@ -18,7 +22,7 @@ class StatFragment : Fragment(R.layout.stat_fragment) {
     private val nbaViewModel by viewModel<NbaViewModel>(owner = { requireActivity() })
     private val statAdapter = StatAdapter()
     private val onStatItemClickListener = OnStatItemClickListener { stat ->
-        stat.let { nbaViewModel.onStatClick(it.id) }
+        stat.let { nbaViewModel.onStatClick(it) }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

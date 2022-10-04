@@ -6,6 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import androidx.lifecycle.lifecycleScope
 import com.example.therundown.R
+import com.example.therundown.view.fragments.GameFragment
+import com.example.therundown.view.fragments.PlayerFragment
+import com.example.therundown.view.fragments.StatFragment
+import com.example.therundown.view.fragments.TeamFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

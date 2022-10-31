@@ -4,11 +4,14 @@ import com.example.therundown.data.dtos.GameDto
 import com.example.therundown.data.dtos.PlayerDto
 import com.example.therundown.data.dtos.StatDto
 import com.example.therundown.data.dtos.TeamDto
+import com.example.therundown.data.dtos.soccer.dtos.SoccerMatchDto
 import com.example.therundown.data.exeptions.*
 import retrofit2.Response
 import java.io.IOException
 
-class RemoteDataSource(private val nbaApi: NBAApi) {
+class RemoteDataSource(
+    private val nbaApi: NBAApi,
+    private val soccerApi: SoccerApi) {
 
     @Throws(ServerExeption::class, PlayerLoadExeption::class)
     fun getPlayers(): List<PlayerDto> {
@@ -105,6 +108,18 @@ class RemoteDataSource(private val nbaApi: NBAApi) {
             return stats?.data ?: emptyList()
         } catch (i: IOException) {
             throw  StatLoadExeption("Unable to get stat list")
+        }
+    }
+
+    @Throws(ServerExeption::class, TeamLoadExeption::class)
+    fun getSoccerMatches(): List<SoccerMatchDto>{
+        try {
+            val responseStats = soccerApi.getSoccerMatches()
+            val stat = ensureResponse(responseStats,"${responseStats.code()} ${responseStats.errorBody()}"
+            )
+            return stat?.data ?: emptyList()
+        }catch (i: IOException){
+            throw SoccerMatchLoadExeption("Unable to get soccer match list")
         }
     }
 

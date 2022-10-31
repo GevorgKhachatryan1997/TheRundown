@@ -25,4 +25,5 @@
     <string name="game_id">GAMES ID</string>
     <string name="stat">Stat</string>
     <string name="game_dates">Game Dates</string>
+    <string name="soccer_match">Soccer Match</string>
 </resources>

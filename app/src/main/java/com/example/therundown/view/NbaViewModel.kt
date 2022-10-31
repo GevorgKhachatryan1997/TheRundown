@@ -4,10 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.therundown.data.exeptions.*
 import com.example.therundown.domain.Repository
-import com.example.therundown.domain.models.Game
-import com.example.therundown.domain.models.Player
-import com.example.therundown.domain.models.Stat
-import com.example.therundown.domain.models.Team
+import com.example.therundown.domain.models.*
 import com.example.therundown.utils.emit
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -32,6 +29,9 @@ class NbaViewModel(private val repository: Repository) : ViewModel() {
 
     private val _statList = MutableStateFlow<List<Stat?>>(emptyList())
     val statList = _statList.asStateFlow()
+
+    private val _soccerMatchList = MutableStateFlow<List<SoccerMatch?>>(emptyList())
+    val soccerMatchList = _soccerMatchList.asStateFlow()
 
     fun loadPlayers() {
         try {
@@ -84,6 +84,12 @@ class NbaViewModel(private val repository: Repository) : ViewModel() {
         }
     }
 
+    fun loadSoccerMatches(){
+        viewModelScope.launch(Dispatchers.IO) {
+            _soccerMatchList.value = repository.getSoccerMatches()
+        }
+    }
+
     fun onPlayerClick(playerId: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val player = repository.getPlayer(playerId)
@@ -109,6 +115,10 @@ class NbaViewModel(private val repository: Repository) : ViewModel() {
         statList.value
             .find { stat -> selectedStat == stat }
             ?.let { _uiEventSharedFlow.emit(ShowStatInfoDialog(it), viewModelScope) }
+    }
+
+    fun onSoccerMatchClick(sealedSoccerMatch: SoccerMatch){
+        //TODO add logic
     }
 
     interface UIEvent

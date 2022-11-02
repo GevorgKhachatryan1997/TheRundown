@@ -12,7 +12,7 @@ private const val SOCCER_BASE_URL_NAME = "SOCCER_BASE_URL_Key"
 val dataModule = module {
 
     factory {
-        RemoteDataSource(get())
+        RemoteDataSource(get(), get())
     }
 
     factory {
@@ -20,21 +20,15 @@ val dataModule = module {
     }
 
     factory {
-        Retrofit
-            .Builder()
-            .baseUrl(get<String>(named(NBA_BASE_URL_NAME)))
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(NbaService::class.java)
+        SoccerApi(get())
     }
 
     factory {
-        Retrofit
-            .Builder()
-            .baseUrl(get<String>(named(SOCCER_BASE_URL_NAME)))
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(SoccerService::class.java)
+        createRetrofit<NbaService>(get(named(NBA_BASE_URL_NAME)))
+    }
+
+    factory {
+        createRetrofit<SoccerService>(get(named(SOCCER_BASE_URL_NAME)))
     }
 
     factory(named(NBA_BASE_URL_NAME)) {
@@ -44,4 +38,13 @@ val dataModule = module {
     factory(named(SOCCER_BASE_URL_NAME)) {
         SOCCER_BASE_URL
     }
+}
+
+private inline fun <reified T> createRetrofit(baseUrl: String): T {
+    return Retrofit
+        .Builder()
+        .baseUrl(baseUrl)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+        .create(T::class.java)
 }

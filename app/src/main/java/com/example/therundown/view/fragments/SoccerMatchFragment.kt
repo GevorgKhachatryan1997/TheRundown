@@ -10,6 +10,7 @@ import com.example.therundown.R
 import com.example.therundown.view.NbaViewModel
 import com.example.therundown.view.adapters.OnSoccerMatchItemClickListener
 import com.example.therundown.view.adapters.SoccerMatchAdapter
+import com.example.therundown.view.dialogs.SoccerMatchDialog
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SoccerMatchFragment : Fragment(R.layout.soccer_match_fragment) {
@@ -37,18 +38,18 @@ class SoccerMatchFragment : Fragment(R.layout.soccer_match_fragment) {
         lifecycleScope.launchWhenCreated {
             nbaViewModel.uiEventSharedFlow.collect { event ->
                 when (event) {
-                    /*is NbaViewModel.ShowPlayerInfoDialog -> {
-                        PlayerDialog.newInstance(event.player).show(
+                    is NbaViewModel.ShowSoccerMatchDialog -> {
+                        SoccerMatchDialog.newInstance(event.soccerMatch).show(
                             requireActivity().supportFragmentManager,
-                            PlayerDialog.PLAYER_DIALOG_TAG
+                            SoccerMatchDialog.SOCCER_DIALOG_TAG
                         )
-                    }*/
+                    }
                 }
             }
         }
 
-        if (nbaViewModel.playerList.value.isEmpty()) {
-            nbaViewModel.loadPlayers()
+        if (nbaViewModel.soccerMatchList.value.isEmpty()) {
+            nbaViewModel.loadSoccerMatches()
         }
     }
 

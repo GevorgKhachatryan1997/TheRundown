@@ -1,6 +1,5 @@
 package com.example.therundown.data.dtos.soccer.dtos
 
-import com.example.therundown.domain.models.Videos
 import com.google.gson.annotations.SerializedName
 
 class SoccerMatchDto(
@@ -20,14 +19,14 @@ class SoccerMatchDto(
     val date: String? = null,
 
     @SerializedName("side1")
-    val sideOne: SideOneDto? = null,
+    val sideOne: SideDto? = null,
 
     @SerializedName("side2")
-    val sideTwo: SideTwoDto? = null,
+    val sideTwo: SideDto? = null,
 
     @SerializedName("competition")
     val compilation: CompilationDto? = null,
 
     @SerializedName("videos")
-    val videos: Videos? = null
-    )
+    val videos: List<VideoDto>? = null
+)

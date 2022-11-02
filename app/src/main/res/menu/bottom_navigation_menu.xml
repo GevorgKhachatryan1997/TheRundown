@@ -23,4 +23,10 @@
         android:enabled="true"
         android:icon="@drawable/basketball_stat"
         android:title="@string/stat"/>
+
+    <item
+        android:id="@+id/soccerMatchBottom"
+        android:enabled="true"
+        android:icon="@drawable/soccer"
+        android:title="@string/soccer"/>
 </menu>

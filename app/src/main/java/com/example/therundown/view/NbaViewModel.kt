@@ -84,7 +84,7 @@ class NbaViewModel(private val repository: Repository) : ViewModel() {
         }
     }
 
-    fun loadSoccerMatches(){
+    fun loadSoccerMatches() {
         viewModelScope.launch(Dispatchers.IO) {
             _soccerMatchList.value = repository.getSoccerMatches()
         }
@@ -117,7 +117,7 @@ class NbaViewModel(private val repository: Repository) : ViewModel() {
             ?.let { _uiEventSharedFlow.emit(ShowStatInfoDialog(it), viewModelScope) }
     }
 
-    fun onSoccerMatchClick(sealedSoccerMatch: SoccerMatch){
+    fun onSoccerMatchClick(sealedSoccerMatch: SoccerMatch) {
         //TODO add logic
     }
 
@@ -127,8 +127,10 @@ class NbaViewModel(private val repository: Repository) : ViewModel() {
     object ShowGameLoadFailMessage : UIEvent
     object ShowTeamLoadFailMessage : UIEvent
     object ShowStatLoadFailMessage : UIEvent
+    object ShowSoccerMatchLoadFailMessage : UIEvent
     class ShowGameInfoDialog(val game: Game) : UIEvent
     class ShowPlayerInfoDialog(val player: Player) : UIEvent
+    class ShowSoccerMatchDialog(val soccerMatch: SoccerMatch) : UIEvent
     class ShowTeamInfoDialog(val team: Team) : UIEvent
     class ShowStatInfoDialog(val stat: Stat) : UIEvent
 }

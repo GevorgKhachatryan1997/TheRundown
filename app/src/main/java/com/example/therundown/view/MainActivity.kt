@@ -6,10 +6,7 @@ import androidx.fragment.app.commit
 import androidx.lifecycle.lifecycleScope
 import com.example.therundown.R
 import com.example.therundown.utils.showShortToast
-import com.example.therundown.view.fragments.GameFragment
-import com.example.therundown.view.fragments.PlayerFragment
-import com.example.therundown.view.fragments.StatFragment
-import com.example.therundown.view.fragments.TeamFragment
+import com.example.therundown.view.fragments.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -45,6 +42,10 @@ class MainActivity : AppCompatActivity() {
                     showFragment(StatFragment.TAG)
                 }
 
+                R.id.soccerMatchBottom -> {
+                    showFragment(SoccerMatchFragment.TAG)
+                }
+
                 else -> return@setOnItemSelectedListener false
             }
             return@setOnItemSelectedListener true
@@ -71,6 +72,10 @@ class MainActivity : AppCompatActivity() {
 
                     is NbaViewModel.ShowStatLoadFailMessage -> {
                         showShortToast("Cant get stats list")
+                    }
+
+                    is NbaViewModel.ShowSoccerMatchLoadFailMessage -> {
+                        showShortToast("Cant get soccer matches list")
                     }
                 }
             }
@@ -110,6 +115,15 @@ class MainActivity : AppCompatActivity() {
                 supportFragmentManager.commit {
                     setReorderingAllowed(true)
                     replace(R.id.fragmentContainer, statFragment, tag)
+                }
+            }
+
+            SoccerMatchFragment.TAG -> {
+                val soccerMatchFragment =
+                    supportFragmentManager.findFragmentByTag(tag) ?: SoccerMatchFragment()
+                supportFragmentManager.commit {
+                    setReorderingAllowed(true)
+                    replace(R.id.fragmentContainer, soccerMatchFragment, tag)
                 }
             }
         }

@@ -115,9 +115,8 @@ class RemoteDataSource(
     fun getSoccerMatches(): List<SoccerMatchDto>{
         try {
             val responseStats = soccerApi.getSoccerMatches()
-            val stat = ensureResponse(responseStats,"${responseStats.code()} ${responseStats.errorBody()}"
-            )
-            return stat?.data ?: emptyList()
+            val stat = ensureResponse(responseStats,"${responseStats.code()} ${responseStats.errorBody()}")
+            return stat ?: emptyList()
         }catch (i: IOException){
             throw SoccerMatchLoadExeption("Unable to get soccer match list")
         }
